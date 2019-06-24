@@ -14,19 +14,23 @@ title:'BitCoin Alert',
 body:'BTC just beat your target price'
 }
 
-function btc(){
+function getbtc(){
     axios.get('https://min-api.cryptocompare.com/data/price?fsym=BTC&tsyms=USD')
         .then(res =>{
         const cryptos= res.data.USD;
         price.innerHTML='$'+cryptos.toLocaleString('en')
         
-        if(targetprice.innerHTML!='' && targetpriceval <= res.data.USD){
-            var Notification=new Notification(notification.title,notification)
+        if(targetprice.innerHTML !='' && targetpriceval < res.data.USD)
+        {
+            let Notification=new window.Notification({
+                title:'BitCoin Alert',
+                body:'BTC just beat your target price'
+             }).show();
         }
     })
 }
-btc();
-setInterval(btc,10000);
+getbtc();
+setInterval(getbtc,10000);
 
 notifyBtn.addEventListener('click', function(event) {
     const modalPath = path.join('file://', __dirname, 'add.html')
